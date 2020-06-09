@@ -1,18 +1,25 @@
-public class Car {
-    int id;
-    String brand;
-    String model;
-    String vin;
-    boolean rent;
+public class Car extends Vehicle {
 
     public Car(int id, String brand, String model, String vin) {
-        this.id = id;
-        this.brand = brand;
-        this.model = model;
-        this.vin = vin;
-        this.rent = false;
+        super(id, brand, model, vin);
     }
 
-    public Car() {
+    @Override
+    public String toString() {
+        return new StringBuilder()
+                .append("Car:{\n")
+                .append("id = ")
+                .append(this.getId())
+                .append("\n")
+                .append("brand = ")
+                .append(this.getBrand())
+                .append("\n")
+                .append("model = ")
+                .append(this.getModel())
+                .append("\n")
+                .append("vin = ")
+                .append(this.getVin())
+                .append("}")
+                .toString();
     }
 }

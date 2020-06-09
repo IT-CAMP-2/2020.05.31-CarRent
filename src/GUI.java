@@ -2,53 +2,48 @@ import java.util.Scanner;
 
 public class GUI {
 
-    CarRepository cr = new CarRepository();
-    Scanner scanner = new Scanner(System.in);
+    private static final VehicleRepository cr = new VehicleRepository();
+    private static final Scanner scanner = new Scanner(System.in);
 
-    void showMainMenu() {
+    public static void showMainMenu() {
         System.out.println("1. Dostępne samochody");
         System.out.println("2. Wypożycz samochód");
         System.out.println("3. Exit");
 
-        String choose = this.scanner.nextLine();
+        String choose = scanner.nextLine();
 
         switch (choose) {
             case "1":
-                this.showCars();
+                showCars();
                 break;
             case "2":
-                this.rentCar();
+                rentCar();
                 break;
             case "3":
                 System.exit(0);
             default:
                 System.out.println("Nieprawidłowy wybór !!");
-                this.showMainMenu();
+                showMainMenu();
                 break;
         }
     }
 
-    void showCars() {
-        for(Car tempraryCar : this.cr.carList) {
-            if(tempraryCar != null && !tempraryCar.rent) {
-                System.out.println("-----------------");
-                System.out.println("Id: " + tempraryCar.id);
-                System.out.println("Marka: " + tempraryCar.brand);
-                System.out.println("Model: " + tempraryCar.model);
-                System.out.println("VIN: " + tempraryCar.vin);
-                System.out.println("-----------------");
+    private static void showCars() {
+        for(Vehicle tempVehicle : cr.getVehicles()) {
+            if(tempVehicle != null && !tempVehicle.isRent()) {
+                System.out.println(tempVehicle);
             }
         }
-        this.showMainMenu();
+        showMainMenu();
     }
 
-    void rentCar() {
+    private static void rentCar() {
         System.out.println("Wpisz id samochodu:");
-        String carId = this.scanner.nextLine();
-        for(Car temporaryCar : this.cr.carList) {
-            if(temporaryCar != null && temporaryCar.id == Integer.parseInt(carId)) {
-                if(!temporaryCar.rent) {
-                    temporaryCar.rent = true;
+        String carId = scanner.nextLine();
+        for(Vehicle tempVehicle : cr.getVehicles()) {
+            if(tempVehicle != null && tempVehicle.getId() == Integer.parseInt(carId)) {
+                if(!tempVehicle.isRent()) {
+                    tempVehicle.setRent(true);
                     System.out.println("Udało się !!");
                 } else {
                     System.out.println("Auto niedostępne !!");
@@ -56,6 +51,6 @@ public class GUI {
                 break;
             }
         }
-        this.showMainMenu();
+        showMainMenu();
     }
 }
