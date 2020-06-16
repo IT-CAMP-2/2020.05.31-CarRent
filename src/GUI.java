@@ -41,14 +41,19 @@ public class GUI {
         System.out.println("Wpisz id samochodu:");
         String carId = scanner.nextLine();
         for(Vehicle tempVehicle : cr.getVehicles()) {
-            if(tempVehicle != null && tempVehicle.getId() == Integer.parseInt(carId)) {
-                if(!tempVehicle.isRent()) {
-                    tempVehicle.setRent(true);
-                    System.out.println("Udało się !!");
-                } else {
-                    System.out.println("Auto niedostępne !!");
+            try {
+                if (tempVehicle != null && tempVehicle.getId() == Integer.parseInt(carId)) {
+                    if (!tempVehicle.isRent()) {
+                        tempVehicle.setRent(true);
+                        System.out.println("Udało się !!");
+                    } else {
+                        System.out.println("Auto niedostępne !!");
+                    }
+                    break;
                 }
-                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Wprowadzono błędne id !!");
+                rentCar();
             }
         }
         showMainMenu();
